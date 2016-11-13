@@ -88,18 +88,24 @@ public class Server extends Thread{
 					
 					if(inimigoRecebido!=null){
 						Main.inimigo = inimigoRecebido;
+						System.out.println("---------------------------------------------------------------------");
 						System.out.println("INIMIGO RECEBIDO");
-						System.out.println("inimigo Y :"+inimigoRecebido.getY()+"\n");
+						System.out.println("X :"+inimigoRecebido.getX());
+						System.out.println("Y :"+inimigoRecebido.getY());
+						System.out.println("HP : "+inimigoRecebido.getHp());
+						System.out.println("---------------------------------------------------------------------"+"\n\n");
 					}else {System.out.println("INIMIGO NÃO RECEBIDO\n\n");}
+					
+					
 					
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 
-					Personagem personagemEnviar = Main.personagem;
-					System.out.println("Personagem Enviar Tem Posição Y Igual a ="+personagemEnviar.getY()+"\n\n" );
-
-					objectOutPS.writeObject(personagemEnviar);
-					objectOutPS.flush();
-					objectOutPS.reset();
+//					Personagem personagemEnviar = Main.personagem;
+//					System.out.println("Personagem Enviar Tem Posição Y Igual a ="+personagemEnviar.getY()+"\n\n" );
+//
+//					objectOutPS.writeObject(personagemEnviar);
+//					objectOutPS.flush();
+//					objectOutPS.reset();
 					
 				} catch (ClassNotFoundException | IOException e) {
 					e.printStackTrace();
@@ -109,30 +115,54 @@ public class Server extends Thread{
 	}
 
 	
-	public static void atualizarDadosServer(Personagem personagem){
+	public static void  enviarPersonagem(){
+		
+		Personagem personagemEnviar = Main.personagem;
+		System.out.println("---------------------------------------------------------------------");
+		System.out.println("PERSONAGEM ENVIAR");
+		System.out.println("X :"+personagemEnviar.getX());
+		System.out.println("Y :"+personagemEnviar.getY());
+		System.out.println("Hp :"+personagemEnviar.getHp());
+		System.out.println("---------------------------------------------------------------------"+"\n\n");
+
 		try {
-			
-		Inimigo inimigoRecebido = (Inimigo) objectInPS.readObject();
-		
-		if(inimigoRecebido!=null){
-			Main.inimigo = inimigoRecebido;
-			System.out.println("INIMIGO RECEBIDO");
-			System.out.println("inimigo Y :"+inimigoRecebido.getY()+"\n");
-		}else {System.out.println("INIMIGO NÃO RECEBIDO\n\n");}
-		
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-		Personagem personagemEnviar = personagem;
-		System.out.println("Personagem Enviar Tem Posição Y Igual a ="+personagemEnviar.getY()+"\n\n" );
-
-		objectOutPS.writeObject(personagemEnviar);
-		objectOutPS.flush();
-		objectOutPS.reset();
-		} catch (ClassNotFoundException | IOException e) {
+			objectOutPS.writeObject(personagemEnviar);
+			objectOutPS.flush();
+			objectOutPS.reset();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
+	
+	
+	
+	
+	
+//	public static void atualizarDadosServer(Personagem personagem){
+//		try {
+//			
+//		Inimigo inimigoRecebido = (Inimigo) objectInPS.readObject();
+//		
+//		if(inimigoRecebido!=null){
+//			Main.inimigo = inimigoRecebido;
+//			System.out.println("INIMIGO RECEBIDO");
+//			System.out.println("inimigo Y :"+inimigoRecebido.getY()+"\n");
+//		}else {System.out.println("INIMIGO NÃO RECEBIDO\n\n");}
+//		
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//		Personagem personagemEnviar = personagem;
+//		System.out.println("Personagem Enviar Tem Posição Y Igual a ="+personagemEnviar.getY()+"\n\n" );
+//
+//		objectOutPS.writeObject(personagemEnviar);
+//		objectOutPS.flush();
+//		objectOutPS.reset();
+//		} catch (ClassNotFoundException | IOException e) {
+//			e.printStackTrace();
+//		}
+//		
+//	}
 	
 	
 }

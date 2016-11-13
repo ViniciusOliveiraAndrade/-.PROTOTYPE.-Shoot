@@ -57,6 +57,8 @@ public class Personagem implements Serializable{
 
 
 	public Rectangle getArea() {
+		area.x = this.x;
+		area.y = this.y;
 		return area;
 	}
 

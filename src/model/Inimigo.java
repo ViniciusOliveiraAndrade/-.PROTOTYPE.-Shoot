@@ -56,6 +56,8 @@ public class Inimigo implements Serializable {
 
 
 	public Rectangle getArea() {
+		area.x = this.x;
+		area.y = this.y;
 		return area;
 	}
 
@@ -71,6 +73,9 @@ public class Inimigo implements Serializable {
 
 	public int getHp() {
 		return hp;
+	}
+	public void setHp (int hp){
+		this.hp = hp;
 	}
 
 
