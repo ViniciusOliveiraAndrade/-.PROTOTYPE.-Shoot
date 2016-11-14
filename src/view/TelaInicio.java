@@ -5,6 +5,8 @@ import javax.swing.JFrame;
 import control.ControleTelaInicio;
 
 import java.awt.FlowLayout;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Font;
 
@@ -38,6 +40,7 @@ public class TelaInicio extends JFrame{
 		controleTelaInicio = new ControleTelaInicio(this);
 		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setIconImage(new ImageIcon(getClass().getResource("/Icon.png")).getImage());
 		setLocationRelativeTo(null);
 		setUndecorated(true);
 		setResizable(false);

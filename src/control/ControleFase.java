@@ -25,36 +25,31 @@ public class ControleFase  implements ActionListener{
 
 	public void checarVencedor(){
 
-		if(Main.inimigo.getHp()<=0){
-			if(fase.isHost()){
-				Server.enviarPersonagem();
-				Server.fecharConexao();
-				Main.telaInfo.setAreaInfo("Tank Verde Venceu");
-			}else{
-				Cliente.enviarInimigo();
-//				Cliente.fecharConexao();
-				Main.telaInfo.setAreaInfo("Tank Verde Venceu");
-			}
-
-			JOptionPane.showMessageDialog(fase, "Tank Verde Venceu");
-			if(fase.isHost()){Server.enviarPersonagem();}else{Cliente.enviarInimigo();}
-			System.exit(0);
-		}
-
-
 		if(Main.personagem.getHp()<=0){
 			if(fase.isHost()){
 				Server.enviarPersonagem();
+				Main.telaInfo.setAreaInfo("Tank Azul Venceu");
+				Server.parar();
 				Server.fecharConexao();
-				Main.telaInfo.setAreaInfo("Tank Azul Venceu");
 			}else{
-				Cliente.enviarInimigo();
-//				Cliente.fecharConexao();
-				Main.telaInfo.setAreaInfo("Tank Azul Venceu");
+				Cliente.parar();
+				Cliente.fecharConexao();
 			}
-
 			JOptionPane.showMessageDialog(fase, "Tank Azul Venceu");
-			if(fase.isHost()){Server.enviarPersonagem();}else{Cliente.enviarInimigo();}
+			System.exit(0);
+		}
+		
+		if(Main.inimigo.getHp()<=0){
+			if(fase.isHost()){
+				Server.enviarPersonagem();
+				Main.telaInfo.setAreaInfo("Tank Verde Venceu");
+				Server.parar();
+				Server.fecharConexao();
+			}else{
+				Cliente.parar();
+				Cliente.fecharConexao();
+			}
+			JOptionPane.showMessageDialog(fase, "Tank Verde Venceu");
 			System.exit(0);
 		}
 	}
@@ -63,5 +58,4 @@ public class ControleFase  implements ActionListener{
 		checarVencedor();
 		fase.repaint();
 	}
-
 }

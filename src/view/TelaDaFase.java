@@ -1,5 +1,6 @@
 package view;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import Main.Main;
@@ -41,8 +42,6 @@ public class TelaDaFase extends JFrame {
 			addKeyListener(controleInimigo);
 		}
 		
-		addWindowListener(controleTelaDaFase);
-		
 		painelInimigo = new PainelInformacao("Direito");
 		painelInimigo.setLocation(0, 529);
 
@@ -53,6 +52,7 @@ public class TelaDaFase extends JFrame {
 		getContentPane().add(painelInimigo);
 
 		setSize(1124,700);
+		setIconImage(new ImageIcon(getClass().getResource("/Icon.png")).getImage());
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);

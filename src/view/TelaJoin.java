@@ -9,6 +9,7 @@ import control.ControleTelaJoin;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class TelaJoin extends JFrame{
@@ -70,6 +71,7 @@ public class TelaJoin extends JFrame{
 		backButton.addActionListener(controleTelaJoin);
 		
 		setSize(220,150);
+		setIconImage(new ImageIcon(getClass().getResource("/Icon.png")).getImage());
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setLocationRelativeTo(null);

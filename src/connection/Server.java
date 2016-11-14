@@ -27,6 +27,8 @@ public class Server extends Thread{
 
 	private static boolean conectado = false;
 
+	private static Loop loop;
+	
 	public Server(int port) {
 		this.port = port;
 	}
@@ -71,7 +73,7 @@ public class Server extends Thread{
 			e.printStackTrace();
 		}
 
-		Loop loop = new Loop();
+		loop = new Loop();
 		loop.start();
 
 		super.run();
@@ -96,7 +98,6 @@ public class Server extends Thread{
 					}else{
 						Main.telaInfo.setAreaInfo("Adversario Desconectado");
 						JOptionPane.showMessageDialog(null, "Adversario Desconectado");
-//						fecharConexao();
 						System.exit(0);
 					}
 				} catch (ClassNotFoundException | IOException e) {
@@ -125,14 +126,22 @@ public class Server extends Thread{
 		}
 	}
 
+	@SuppressWarnings("deprecation")
+	public static void parar(){
+		loop.stop();
+	}
+	
 	public static void fecharConexao(){
 		try {
-			serverSocket.close();
-			socket.close();
 			objectOutPS.close();
 			objectInPS.close();
+			socket.close();
+			serverSocket.close();
+			System.out.println("Server Fechado");
+			Main.telaInfo.setAreaInfo("Server Fechado.");
 		} catch (IOException e) {
 			e.printStackTrace();
+			System.out.println("Imposivel Fechar o Server");
 		}
 	}
 

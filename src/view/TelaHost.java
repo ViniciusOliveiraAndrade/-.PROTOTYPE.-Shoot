@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 
 import control.ControleTelaHost;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -76,6 +77,7 @@ public class TelaHost extends JFrame{
 	
 	
 	setSize(360,85);
+	setIconImage(new ImageIcon(getClass().getResource("/Icon.png")).getImage());
 	setResizable(false);
 	setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	setLocationRelativeTo(null);

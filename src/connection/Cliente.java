@@ -6,8 +6,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import javax.swing.JOptionPane;
-
 import Main.Main;
 import model.Inimigo;
 import model.Personagem;
@@ -24,12 +22,13 @@ public class Cliente extends Thread{
 	private int port;
 
 	private String ip;
+	
+	private static Loop loop;
 
 	public Cliente(String ip, int port) {
 		this.ip = ip;
 		this.port = port;
 	}
-
 
 	public void run() {
 		try {
@@ -39,7 +38,6 @@ public class Cliente extends Thread{
 			System.out.println("foi_2");
 			objectInPS = new ObjectInputStream(socket.getInputStream());
 			System.out.println("foi_3");
-
 
 		} catch (UnknownHostException e) {
 
@@ -51,7 +49,7 @@ public class Cliente extends Thread{
 		System.out.println("Completo");
 
 		new TelaDaFase(false);
-		Loop loop = new Loop();
+		loop = new Loop();
 		loop.start();
 
 		super.run();
@@ -59,11 +57,9 @@ public class Cliente extends Thread{
 
 
 	public class Loop extends Thread{
-		@Override
 		public void run() {
 			while (true){
 				try {
-					if(socket.isConnected()){
 						Personagem personagemRecebido = (Personagem) objectInPS.readObject();
 						if(personagemRecebido!=null){
 							Main.personagem = personagemRecebido;
@@ -74,16 +70,9 @@ public class Cliente extends Thread{
 							System.out.println("HP :"+personagemRecebido.getHp());
 							System.out.println("---------------------------------------------------------------------"+"\n\n");
 						}
-					}else{
-						Main.telaInfo.setAreaInfo("Adversario Desconectado");
-						JOptionPane.showMessageDialog(null, "Adversario Desconectado");
-//						fecharConexao();
-						System.exit(0);
-					}
 
 				} catch (IOException | ClassNotFoundException e) {
 					e.printStackTrace();
-//					fecharConexao();
 				}
 			}
 		}
@@ -105,21 +94,27 @@ public class Cliente extends Thread{
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("Não foi possivel enviar o inimigo");
-//			fecharConexao();
 		}
 	}
 
-//	public static void fecharConexao(){
-//
-//		try {
-//			socket.close();
-//			objectOutPS.close();
-//			objectInPS.close();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
+	public static void fecharConexao(){
 
+		try {
+			objectInPS.close();
+			objectOutPS.close();
+			socket.close();
+			System.out.println("Cliente Fechado");
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("Imposivel Fechar o Server");
+		}
+	}
+
+	@SuppressWarnings("deprecation")
+	public static void parar(){
+		loop.stop();
+	}
+	
 	public ObjectOutputStream getDataOutPS() {
 		return objectOutPS;
 	}

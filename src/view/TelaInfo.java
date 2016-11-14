@@ -2,6 +2,7 @@ package view;
 
 import java.awt.Color;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -65,6 +66,7 @@ public class TelaInfo extends JFrame{
 		scrollPane.setViewportView(areaInfo);
 		
 		setTitle("Server Information");
+		setIconImage(new ImageIcon(getClass().getResource("/Icon.png")).getImage());
 		setSize(450,300);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);

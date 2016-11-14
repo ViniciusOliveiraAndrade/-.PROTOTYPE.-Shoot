@@ -28,11 +28,9 @@ public class ControlePersonagem extends KeyAdapter implements ActionListener{
 			for(int i = 0 ; i < Main.inimigo.getTirosInimigo().size();i++){
 				if(personagem.getArea().intersects(Main.inimigo.getTirosInimigo().get(i).getX(),Main.inimigo.getTirosInimigo().get(i).getY(),37,13) ){
 					Main.inimigo.getTirosInimigo().remove(i);
-
 					personagem.dano();
-
-					System.out.println("Vermelho Acertou");
-
+					
+					Main.telaInfo.setAreaInfo("Tank Azul Acertou.");
 					Server.enviarPersonagem();
 				}
 			}
@@ -43,8 +41,8 @@ public class ControlePersonagem extends KeyAdapter implements ActionListener{
 		try {
 			for(int i = 0 ; i < personagem.getTirosUsuario().size();i++){
 				if(Main.inimigo.getArea().intersects(personagem.getTirosUsuario().get(i).getX(),personagem.getTirosUsuario().get(i).getY(),37,13)){
-					personagem.getTirosUsuario().remove(i);		
-					System.out.println("Azul Acertou");
+					personagem.getTirosUsuario().remove(i);
+					Main.telaInfo.setAreaInfo("Tank Verde Acertou.");
 					Server.enviarPersonagem();
 				}
 			}
@@ -52,9 +50,11 @@ public class ControlePersonagem extends KeyAdapter implements ActionListener{
 	}
 
 	public void moverTiros(){
+
 		/**
 		 * Move os tiros do Personagem (bloco Azul)
 		 */
+		
 		if (personagem.getTirosUsuario()!=null){
 			try {
 				for(Point pontos : personagem.getTirosUsuario()){
