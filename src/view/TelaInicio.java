@@ -20,7 +20,7 @@ public class TelaInicio extends JFrame{
 	public TelaInicio() {
 		
 		setResizable(false);
-		setSize(130,152);
+		setSize(130,122);
 		getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		hostButton = new JButton("Host");
@@ -39,6 +39,8 @@ public class TelaInicio extends JFrame{
 		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
+		setUndecorated(true);
+		setResizable(false);
 		setVisible(true);
 	}
 

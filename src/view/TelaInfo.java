@@ -60,16 +60,23 @@ public class TelaInfo extends JFrame{
 		
 		areaInfo = new JTextArea();
 		areaInfo.setEditable(false);
+		areaInfo.setBackground(Color.BLACK);
+		areaInfo.setForeground(Color.GREEN);
 		scrollPane.setViewportView(areaInfo);
 		
 		setTitle("Server Information");
 		setSize(450,300);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
+		setResizable(false);
 		setVisible(true);
 	
 	}
 
+	public void trocaVisibilidade(){
+		setVisible(!isVisible());
+	}
+	
 	public void setServerIpField(String serverIpField) {
 		this.serverIpField.setText(serverIpField);
 	}

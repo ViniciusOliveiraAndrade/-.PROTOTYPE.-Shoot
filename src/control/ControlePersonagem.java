@@ -16,6 +16,7 @@ public class ControlePersonagem extends KeyAdapter implements ActionListener{
 
 	private Personagem personagem;
 	private Timer time;
+	
 	public ControlePersonagem(Personagem personagem) {
 		this.personagem = personagem;
 		time = new Timer(10, this);
@@ -25,13 +26,13 @@ public class ControlePersonagem extends KeyAdapter implements ActionListener{
 	public void checarDano(){
 		try {
 			for(int i = 0 ; i < Main.inimigo.getTirosInimigo().size();i++){
-				if(personagem.getArea().intersects(Main.inimigo.getTirosInimigo().get(i).getX(),Main.inimigo.getTirosInimigo().get(i).getY(),10,10) ){
+				if(personagem.getArea().intersects(Main.inimigo.getTirosInimigo().get(i).getX(),Main.inimigo.getTirosInimigo().get(i).getY(),37,13) ){
 					Main.inimigo.getTirosInimigo().remove(i);
-					
+
 					personagem.dano();
-					
+
 					System.out.println("Vermelho Acertou");
-					
+
 					Server.enviarPersonagem();
 				}
 			}
@@ -41,17 +42,15 @@ public class ControlePersonagem extends KeyAdapter implements ActionListener{
 	public void checarDanoInimigo(){
 		try {
 			for(int i = 0 ; i < personagem.getTirosUsuario().size();i++){
-				if(Main.inimigo.getArea().intersects(personagem.getTirosUsuario().get(i).getX(),personagem.getTirosUsuario().get(i).getY(),10,10)){
+				if(Main.inimigo.getArea().intersects(personagem.getTirosUsuario().get(i).getX(),personagem.getTirosUsuario().get(i).getY(),37,13)){
 					personagem.getTirosUsuario().remove(i);		
 					System.out.println("Azul Acertou");
 					Server.enviarPersonagem();
-				
 				}
 			}
 		} catch (Exception e) {}
-		
 	}
-	
+
 	public void moverTiros(){
 		/**
 		 * Move os tiros do Personagem (bloco Azul)
@@ -61,14 +60,13 @@ public class ControlePersonagem extends KeyAdapter implements ActionListener{
 				for(Point pontos : personagem.getTirosUsuario()){
 					pontos.x=pontos.x + 4;
 				}
-				
+
 			} catch (Exception e) {
 				moverTiros();
 			}
 			Server.enviarPersonagem();
 			try {
 				for(int i = 0 ; i < personagem.getTirosUsuario().size();i++){
-					//Era x >= 1110
 					if(personagem.getTirosUsuario().get(i).x>=1110 ){
 						personagem.getTirosUsuario().remove(i);
 						Server.enviarPersonagem();
@@ -77,29 +75,6 @@ public class ControlePersonagem extends KeyAdapter implements ActionListener{
 			} catch (Exception e) {
 			}
 		}
-
-		/**
-		 * Move os tiros do inimigo (Bloco Vermelho)
-		 */
-//		if (Main.inimigo.getTirosInimigo()!=null){
-//			try {
-//				for(Point pontos : Main.inimigo.getTirosInimigo()){
-//					pontos.x=pontos.x - 4;
-//				}
-//			} catch (Exception e) {
-//				moverTiros();
-//			}
-//
-//			try {
-//				for(int i = 0 ; i < Main.inimigo.getTirosInimigo().size();i++){
-//					if(Main.inimigo.getTirosInimigo().get(i).x<=0 ){
-//						Main.inimigo.getTirosInimigo().remove(i);
-//					}
-//				}
-//			} catch (Exception e) {
-//			}
-//		}
-		
 	}
 
 	public void keyPressed(KeyEvent e) {
@@ -126,9 +101,11 @@ public class ControlePersonagem extends KeyAdapter implements ActionListener{
 	public void keyReleased(KeyEvent e) {
 
 		if(e.getKeyCode()==KeyEvent.VK_SPACE){
-			personagem.getTirosUsuario().add(new Point(personagem.getX()+40, personagem.getY()+14));
+			if(personagem.getTirosUsuario().size()<=10){
+				personagem.getTirosUsuario().add(new Point(personagem.getX()+40, personagem.getY()+14));
 
-			Server.enviarPersonagem();
+				Server.enviarPersonagem();
+			}
 		}
 	}
 

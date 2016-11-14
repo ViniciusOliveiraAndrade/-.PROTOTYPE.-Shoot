@@ -6,14 +6,16 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import javax.swing.JOptionPane;
+
 import Main.Main;
 import model.Inimigo;
 import model.Personagem;
-import view.TelaFaseJoin;
+import view.TelaDaFase;
 
 public class Cliente extends Thread{
 
-	private Socket socket;
+	private static Socket socket;
 
 	private static ObjectOutputStream objectOutPS;
 
@@ -47,54 +49,46 @@ public class Cliente extends Thread{
 			e.printStackTrace();
 		}
 		System.out.println("Completo");
-		
-		new TelaFaseJoin(false);
 
+		new TelaDaFase(false);
 		Loop loop = new Loop();
 		loop.start();
 
 		super.run();
 	}
-	public ObjectOutputStream getDataOutPS() {
-		return objectOutPS;
-	}
 
-	public ObjectInputStream getDataInPS() {
-		return objectInPS;
-	}
 
 	public class Loop extends Thread{
 		@Override
 		public void run() {
 			while (true){
 				try {
-					
-//					Inimigo inimigoEnviar = Main.inimigo;
-//					System.out.println("Inimigo Enviar Tem Posição Y Igual a ="+inimigoEnviar.getY() +"\n");
-//					
-//					objectOutPS.writeObject(inimigoEnviar);
-//					objectOutPS.flush();
-//					objectOutPS.reset();
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-					
-					Personagem personagemRecebido = (Personagem) objectInPS.readObject();
-					if(personagemRecebido!=null){
-						Main.personagem = personagemRecebido;
-						System.out.println("---------------------------------------------------------------------");
-						System.out.println("PERSONAGEM RECEBIDO");
-						System.out.println("X :"+personagemRecebido.getX());
-						System.out.println("Y :"+personagemRecebido.getY());
-						System.out.println("HP :"+personagemRecebido.getHp());
-						System.out.println("---------------------------------------------------------------------"+"\n\n");
+					if(socket.isConnected()){
+						Personagem personagemRecebido = (Personagem) objectInPS.readObject();
+						if(personagemRecebido!=null){
+							Main.personagem = personagemRecebido;
+							System.out.println("---------------------------------------------------------------------");
+							System.out.println("PERSONAGEM RECEBIDO");
+							System.out.println("X :"+personagemRecebido.getX());
+							System.out.println("Y :"+personagemRecebido.getY());
+							System.out.println("HP :"+personagemRecebido.getHp());
+							System.out.println("---------------------------------------------------------------------"+"\n\n");
+						}
+					}else{
+						Main.telaInfo.setAreaInfo("Adversario Desconectado");
+						JOptionPane.showMessageDialog(null, "Adversario Desconectado");
+//						fecharConexao();
+						System.exit(0);
 					}
-					
+
 				} catch (IOException | ClassNotFoundException e) {
 					e.printStackTrace();
+//					fecharConexao();
 				}
 			}
 		}
 	}
-	
+
 	public static void enviarInimigo(){
 		Inimigo inimigoEnviar = Main.inimigo;
 		System.out.println("---------------------------------------------------------------------");
@@ -107,42 +101,30 @@ public class Cliente extends Thread{
 			objectOutPS.writeObject(inimigoEnviar);
 			objectOutPS.flush();
 			objectOutPS.reset();
-		
+
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("Não foi possivel enviar o inimigo");
+//			fecharConexao();
 		}
-		
 	}
-	
-	
-	
-	
-	
-//	public static void atualizarDadosCliente(Inimigo inimigo){
+
+//	public static void fecharConexao(){
+//
 //		try {
-//			
-//			Inimigo inimigoEnviar = inimigo;
-//			System.out.println("Inimigo Enviar Tem Posição Y Igual a ="+inimigoEnviar.getY() +"\n");
-//			
-//			objectOutPS.writeObject(inimigoEnviar);
-//			objectOutPS.flush();
-//			objectOutPS.reset();
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//			
-//			Personagem personagemRecebido = (Personagem) objectInPS.readObject();
-//			if(personagemRecebido!=null){
-//				Main.personagem = personagemRecebido;
-//				System.out.println("PERSONAGEM RECEBIDO");
-//				System.out.println("PERSONAGEM Y :"+personagemRecebido.getY()+"\n\n");
-//			}
-//			
-//		
-//		} catch (IOException | ClassNotFoundException e) {
+//			socket.close();
+//			objectOutPS.close();
+//			objectInPS.close();
+//		} catch (IOException e) {
 //			e.printStackTrace();
 //		}
-//		
 //	}
-	
-	
+
+	public ObjectOutputStream getDataOutPS() {
+		return objectOutPS;
+	}
+
+	public ObjectInputStream getDataInPS() {
+		return objectInPS;
+	}
 }

@@ -79,6 +79,7 @@ public class TelaHost extends JFrame{
 	setResizable(false);
 	setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	setLocationRelativeTo(null);
+	setUndecorated(true);
 	setVisible(true);
 	
 	}

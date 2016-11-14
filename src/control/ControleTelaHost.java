@@ -24,14 +24,20 @@ public class ControleTelaHost implements ActionListener{
 		if(e.getSource()==telaHost.getConnectButton()){
 			
 			Main.telaInfo = new TelaInfo(telaHost.getIp(),telaHost.getPortField());
-			
+			Main.telaInfo.trocaVisibilidade();
 			
 			Main.server = new Server(telaHost.getPortField());
 			Main.server.start();
 			
-//			new TelaFaseHost(true);
-			telaHost.dispose();
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
 			
+			if(Server.isConectado()){
+			telaHost.dispose();
+			}
 		}
 		if(e.getSource()==telaHost.getBackButton()){
 			new TelaInicio();

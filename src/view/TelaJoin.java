@@ -43,6 +43,7 @@ public class TelaJoin extends JFrame{
 		getContentPane().add(portLabel);
 		
 		portField = new JTextField();
+		portField.setText("25255");
 		portField.setBounds(40, 33, 86, 20);
 		getContentPane().add(portField);
 		portField.setColumns(10);
@@ -72,6 +73,7 @@ public class TelaJoin extends JFrame{
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setLocationRelativeTo(null);
+		setUndecorated(true);
 		setVisible(true);
 	}
 

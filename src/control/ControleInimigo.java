@@ -16,6 +16,7 @@ public class ControleInimigo extends KeyAdapter implements ActionListener{
 
 	private Inimigo inimigo;
 	private Timer time;
+	
 	public ControleInimigo(Inimigo inimigo) {
 		this.inimigo = inimigo;
 		time = new Timer(10, this);
@@ -25,33 +26,32 @@ public class ControleInimigo extends KeyAdapter implements ActionListener{
 	public void checarDano(){
 		try {
 			for(int i = 0 ; i < Main.personagem.getTirosUsuario().size();i++){
-				if(inimigo.getArea().intersects(Main.personagem.getTirosUsuario().get(i).getX(),Main.personagem.getTirosUsuario().get(i).getY(),10,10)){
+				if(inimigo.getArea().intersects(Main.personagem.getTirosUsuario().get(i).getX(),Main.personagem.getTirosUsuario().get(i).getY(),37,13)){
 					Main.personagem.getTirosUsuario().remove(i);
-					
+
 					inimigo.dano();
-					
+
 					System.out.println("Azul Acertou");
-					
+
 					Cliente.enviarInimigo();
 				}
 			}
 		} catch (Exception e) {}
 	}
-	
+
 	public void checarDanoPersonagem(){
 		try {
 			for(int i = 0 ; i < inimigo.getTirosInimigo().size();i++){
-				if(Main.personagem.getArea().intersects(inimigo.getTirosInimigo().get(i).getX(),inimigo.getTirosInimigo().get(i).getY(),10,10) ){
+				if(Main.personagem.getArea().intersects(inimigo.getTirosInimigo().get(i).getX(),inimigo.getTirosInimigo().get(i).getY(),37,13) ){
 					inimigo.getTirosInimigo().remove(i);
 					System.out.println("Vermelho Acertou");
 					Cliente.enviarInimigo();
-					
 				}
 			}
 		} catch (Exception e) {}
-		
+
 	}
-	
+
 	public void moverTiros(){
 		/**
 		 * Move os tiros do inimigo (Bloco Vermelho)
@@ -59,15 +59,15 @@ public class ControleInimigo extends KeyAdapter implements ActionListener{
 		if (inimigo.getTirosInimigo()!=null){
 			try {
 				for(Point pontos : inimigo.getTirosInimigo()){
-					pontos.x=pontos.x - 4;
+					pontos.x=pontos.x - 5;
 				}
-				
+
 			} catch (Exception e) {
 				moverTiros();
 			}
-			
+
 			Cliente.enviarInimigo();
-			
+
 			try {
 				for(int i = 0 ; i < inimigo.getTirosInimigo().size();i++){
 					if(inimigo.getTirosInimigo().get(i).x<=0 ){
@@ -78,32 +78,9 @@ public class ControleInimigo extends KeyAdapter implements ActionListener{
 			} catch (Exception e) {
 			}
 		}
-	
-		/**
-		 * Move os tiros do Personagem (bloco Azul)
-		 */
-		
-//		if (Main.personagem.getTirosUsuario()!=null){
-//			try {
-//				for(Point pontos : Main.personagem.getTirosUsuario()){
-//					pontos.x=pontos.x + 4;
-//				}
-//			} catch (Exception e) {
-//				moverTiros();
-//			}
-//			
-//			try {
-//				for(int i = 0 ; i < Main.personagem.getTirosUsuario().size();i++){
-//					if(Main.personagem.getTirosUsuario().get(i).x>=1110 ){
-//						Main.personagem.getTirosUsuario().remove(i);
-//					}
-//				}
-//			} catch (Exception e) {
-//			}
-//		}
-		
+
 	}
-	
+
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode()==KeyEvent.VK_DOWN){
 			inimigo.setY(inimigo.getY()+4);
@@ -130,9 +107,11 @@ public class ControleInimigo extends KeyAdapter implements ActionListener{
 	public void keyReleased(KeyEvent e) {
 
 		if(e.getKeyCode()==KeyEvent.VK_SPACE){
-			inimigo.getTirosInimigo().add(new Point(inimigo.getX()-10, inimigo.getY()+14));
-			
-			Cliente.enviarInimigo();
+			if(inimigo.getTirosInimigo().size()<=10){
+				inimigo.getTirosInimigo().add(new Point(inimigo.getX()-37, inimigo.getY()+14));
+    
+				Cliente.enviarInimigo();
+			}
 		}
 	}
 
@@ -140,6 +119,6 @@ public class ControleInimigo extends KeyAdapter implements ActionListener{
 		checarDanoPersonagem();
 		moverTiros();
 		checarDano();
-		
+
 	}
 }
