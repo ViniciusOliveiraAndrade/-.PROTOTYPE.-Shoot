@@ -42,18 +42,13 @@ public class Fase extends JPanel{
 		controleFase = new ControleFase(this);
 
 		setSize(1124,358);
+		setOpaque(false);
 		setBorder(new LineBorder(new Color(0, 0, 0), 5));
 	}
 
 	public void paint(Graphics g) {
 		
 		super.paint(g);
-		
-		/**
-		 * Desenha BackGround
-		 */
-		
-		g.drawImage(backGroundImagem.getImage(), 0, 0, this);
 		
 		/**
 		 * Desenho do Personagem (Tank Verde)
@@ -75,7 +70,12 @@ public class Fase extends JPanel{
 			g.drawImage(inimigoTiroImagem.getImage(),ponto.x, ponto.y,null);
 		}
 	}
-
+	
+	public void paintComponent(Graphics g) {
+		g.drawImage(backGroundImagem.getImage(), 0, 0, this);
+		super.paintComponent(g);
+	}
+	
 	/**
 	 * Gets
 	 */

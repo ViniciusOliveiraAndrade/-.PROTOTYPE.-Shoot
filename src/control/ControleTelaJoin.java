@@ -14,6 +14,9 @@ public class ControleTelaJoin implements ActionListener{
 	
 	public ControleTelaJoin(TelaJoin telaJoin) {
 		this.telaJoin = telaJoin;
+		this.telaJoin.getConectarButton().addActionListener(this);
+		this.telaJoin.getBackButton().addActionListener(this);
+		
 	}
 	
 	public void actionPerformed(ActionEvent e) {

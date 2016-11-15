@@ -1,14 +1,15 @@
 package view;
 
 import javax.swing.JFrame;
+import javax.swing.border.LineBorder;
 
 import control.ControleTelaInicio;
-
-import java.awt.FlowLayout;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Font;
+import java.awt.CardLayout;
+import java.awt.Color;
 
 public class TelaInicio extends JFrame{
 	
@@ -17,25 +18,32 @@ public class TelaInicio extends JFrame{
 	private JButton joinButton;
 	private JButton exitButton;
 	
+	private BackGround backGroundPanel;
+	
 	private ControleTelaInicio controleTelaInicio;
 	
 	public TelaInicio() {
 		
 		setResizable(false);
 		setSize(130,122);
-		getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		getContentPane().setLayout(new CardLayout(0, 0));
+		
+		backGroundPanel = new BackGround("/TelaInicioBackground.png");
+		backGroundPanel.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		getContentPane().add(backGroundPanel, "name_12021345530869");
+		
 		
 		hostButton = new JButton("Host");
-		hostButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		getContentPane().add(hostButton);
+		backGroundPanel.add(hostButton);
+		hostButton.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		
 		joinButton = new JButton("Join");
-		joinButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		getContentPane().add(joinButton);
+		backGroundPanel.add(joinButton);
+		joinButton.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		
 		exitButton = new JButton("Exit");
-		exitButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		getContentPane().add(exitButton);
+		backGroundPanel.add(exitButton);
+		exitButton.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		
 		controleTelaInicio = new ControleTelaInicio(this);
 		

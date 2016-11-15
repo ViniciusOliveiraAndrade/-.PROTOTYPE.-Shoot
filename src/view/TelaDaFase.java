@@ -33,7 +33,6 @@ public class TelaDaFase extends JFrame {
 
 		fase = new Fase(host);
 		fase.setLocation(0, 171);
-
 		if(host){
 			controlePersonagem = new ControlePersonagem(Main.personagem);
 			addKeyListener(controlePersonagem);

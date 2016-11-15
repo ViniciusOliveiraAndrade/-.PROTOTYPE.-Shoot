@@ -6,8 +6,11 @@ import java.net.UnknownHostException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JLabel;
+
+import java.awt.CardLayout;
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 
 import control.ControleTelaHost;
 
@@ -15,22 +18,59 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.Color;
 
 public class TelaHost extends JFrame{
 	private static final long serialVersionUID = 1L;
 
 	private String ip = "";
-	
+
 	private JTextField portField;
-	
+
 	private JLabel portLabel;
-	
+
 	private JButton connectButton;
 	private JButton backButton;
-	
+
+	private BackGround backGroundPanel;
+
 	private ControleTelaHost controleTelaHost;
-	
+
 	public TelaHost() {
+
+		backGroundPanel = new BackGround("/TelaHostBackground.png");
+		backGroundPanel.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		getContentPane().add(backGroundPanel);
+		backGroundPanel.setLayout(null);
+
+		portLabel = new JLabel("Port:");
+		portLabel.setForeground(Color.YELLOW);
+		backGroundPanel.add(portLabel);
+		portLabel.setFont(new Font("Lucida Sans Unicode", Font.BOLD, 14));
+		portLabel.setBounds(10, 11, 45, 23);
+
+		portField = new JTextField();
+		portField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		backGroundPanel.add(portField);
+		portField.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent ev) {
+				String caracteres = "0987654321";
+				if (!caracteres.contains(ev.getKeyChar() + "")) {
+					ev.consume();
+				}
+			}
+		});
+		portField.setBounds(65, 13, 105, 20);
+		portField.setColumns(10);
+		portField.setText("25255");
+
+		connectButton = new JButton("Connect");
+		backGroundPanel.add(connectButton);
+		connectButton.setBounds(186, 12, 85, 23);
+
+		backButton = new JButton("Back");
+		backGroundPanel.add(backButton);
+		backButton.setBounds(281, 12, 69, 23);
 
 		try {
 			ip = InetAddress.getLocalHost().getHostAddress();
@@ -38,52 +78,24 @@ public class TelaHost extends JFrame{
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(this, "Não há conexão com a internet ou não foi possivel encontrar o IP");
 		} 
-		
-		
-	setTitle("Servidor - "+ ip);
-	getContentPane().setLayout(null);
-	
-	portLabel = new JLabel("Port:");
-	portLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-	portLabel.setBounds(10, 11, 38, 23);
-	getContentPane().add(portLabel);
-	
-	portField = new JTextField();
-	portField.addKeyListener(new KeyAdapter() {
-        public void keyTyped(KeyEvent ev) {
-            String caracteres = "0987654321";
-            if (!caracteres.contains(ev.getKeyChar() + "")) {
-                ev.consume();
-            }
-        }
-    });
-	portField.setBounds(47, 14, 109, 20);
-	getContentPane().add(portField);
-	portField.setColumns(10);
-	portField.setText("25255");
-	
-	connectButton = new JButton("Connect");
-	connectButton.setBounds(166, 13, 89, 23);
-	getContentPane().add(connectButton);
-	
-	backButton = new JButton("Back");
-	backButton.setBounds(265, 13, 69, 23);
-	getContentPane().add(backButton);
-	
-	controleTelaHost = new ControleTelaHost(this);
-	
-	connectButton.addActionListener(controleTelaHost);
-	backButton.addActionListener(controleTelaHost);
-	
-	
-	setSize(360,85);
-	setIconImage(new ImageIcon(getClass().getResource("/Icon.png")).getImage());
-	setResizable(false);
-	setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-	setLocationRelativeTo(null);
-	setUndecorated(true);
-	setVisible(true);
-	
+
+		setTitle("Servidor - "+ ip);
+		getContentPane().setLayout(new CardLayout(0, 0));
+
+		controleTelaHost = new ControleTelaHost(this);
+
+		setSize(360,47);
+		setIconImage(new ImageIcon(getClass().getResource("/Icon.png")).getImage());
+		setResizable(false);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setLocationRelativeTo(null);
+		setUndecorated(true);
+		setVisible(true);
+
+	}
+
+	public ControleTelaHost getControleTelaHost() {
+		return controleTelaHost;
 	}
 
 	public int getPortField() {
@@ -105,9 +117,6 @@ public class TelaHost extends JFrame{
 	public String getIp() {
 		return ip;
 	}
-	
-	
-	
-	
-	
+
+
 }

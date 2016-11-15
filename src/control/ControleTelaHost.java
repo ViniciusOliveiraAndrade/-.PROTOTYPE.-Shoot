@@ -14,9 +14,9 @@ public class ControleTelaHost implements ActionListener{
 	private TelaHost telaHost;
 	
 	public ControleTelaHost(TelaHost telaHost) {
-		
 		this.telaHost = telaHost;
-		
+		this.telaHost.getConnectButton().addActionListener(this);
+		this.telaHost.getBackButton().addActionListener(this);
 	}
 	
 	public void actionPerformed(ActionEvent e) {

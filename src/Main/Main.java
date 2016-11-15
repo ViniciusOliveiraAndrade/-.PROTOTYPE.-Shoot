@@ -17,9 +17,6 @@ public class Main {
 	public static Inimigo inimigo = new Inimigo(1080);
 	
 	public static void main(String[] args) {
-	
 		new TelaInicio();
-	
 	}
-
 }
