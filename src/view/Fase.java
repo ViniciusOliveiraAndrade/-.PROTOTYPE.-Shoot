@@ -3,9 +3,13 @@ package view;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
@@ -22,19 +26,61 @@ public class Fase extends JPanel{
 
 	private ArrayList<Point> tirosInimigo;
 
-	private ImageIcon personagemImagem;
+//	private ImageIcon personagemImagem;
 	private ImageIcon personagemTiroImagem;
-	private ImageIcon inimigoImagem;
+//	private ImageIcon inimigoImagem;
 	private ImageIcon inimigoTiroImagem;
 	private ImageIcon backGroundImagem;
-
+	
+	private  BufferedImage[] personagemSprites;
+	private  BufferedImage[] inimigoSprites;
+	
+	private BufferedImage spriteSheet;
+	
+	private int personagemAparencia = 0;
+	private int inimigoAparencia  = 0;
+	
 	public Fase(boolean host) {
 		this.host = host;
 		
-		personagemImagem = new ImageIcon(getClass().getResource("/Personagem.png"));
+		personagemSprites = new BufferedImage[8];
+		inimigoSprites = new BufferedImage[8];
+		
+		try {
+			spriteSheet = ImageIO.read(getClass().getResource("/PersonagemSprite.png"));
+		} catch (IOException e1) {
+			System.out.println("Não foi possivel carregar a Srpite do Personagem");
+			JOptionPane.showMessageDialog(this, "Não foi possivel carregar a Srpite do Personagem");
+			e1.printStackTrace();
+		}
+		
+		
+		for(int i = 0; i < 8; i++) {
+			for(int j = 0; j < 1; j++) {
+				personagemSprites[(i * 1) + j] = spriteSheet.getSubimage(i * 40, j * 40, 40, 40);
+			}
+		}
+		
+		
+		try {
+			spriteSheet = ImageIO.read(getClass().getResource("/InimigoSprite.png"));
+		} catch (IOException e) {
+			System.out.println("Não foi possivel carregar a Srpite do Inimigo");
+			JOptionPane.showMessageDialog(this, "Não foi possivel carregar a Srpite do Inimigo");
+			e.printStackTrace();
+		}
+		
+		
+		for(int i = 0; i < 8; i++) {
+			for(int j = 0; j < 1; j++) {
+				inimigoSprites[(i * 1) + j] = spriteSheet.getSubimage(i * 40, j * 40, 40, 40);
+			}
+		}
+		
+//		personagemImagem = new ImageIcon(getClass().getResource("/Personagem.png"));
 		personagemTiroImagem = new ImageIcon(getClass().getResource("/TiroPersonagem.png"));
 
-		inimigoImagem = new ImageIcon(getClass().getResource("/Inimigo.png"));
+//		inimigoImagem = new ImageIcon(getClass().getResource("/Inimigo.png"));
 		inimigoTiroImagem = new ImageIcon(getClass().getResource("/TiroInimigo.png"));
 
 		backGroundImagem = new ImageIcon(getClass().getResource("/BackGround.png"));
@@ -54,7 +100,7 @@ public class Fase extends JPanel{
 		 * Desenho do Personagem (Tank Verde)
 		 */
 
-		g.drawImage(personagemImagem.getImage(),Main.personagem.getX(), Main.personagem.getY(),null);
+		g.drawImage(personagemSprites[personagemAparencia],Main.personagem.getX(), Main.personagem.getY(),null);
 
 		for(Point ponto : Main.personagem.getTirosUsuario()){
 			g.drawImage(personagemTiroImagem.getImage(),ponto.x, ponto.y,null);
@@ -64,7 +110,7 @@ public class Fase extends JPanel{
 		 * Desenho do Inimigo(Tank Azul)
 		 */
 
-		g.drawImage(inimigoImagem.getImage(),Main.inimigo.getX(), Main.inimigo.getY(),null);
+		g.drawImage(inimigoSprites[inimigoAparencia],Main.inimigo.getX(), Main.inimigo.getY(),null);
 
 		for(Point ponto : Main.inimigo.getTirosInimigo()){
 			g.drawImage(inimigoTiroImagem.getImage(),ponto.x, ponto.y,null);
@@ -92,4 +138,22 @@ public class Fase extends JPanel{
 		return tirosInimigo;
 	}
 
+	public int getPersonagemAparencia() {
+		return personagemAparencia;
+	}
+
+	public void setPersonagemAparencia(int personagemAparencia) {
+		this.personagemAparencia = personagemAparencia;
+	}
+
+	public int getInimigoAparencia() {
+		return inimigoAparencia;
+	}
+
+	public void setInimigoAparencia(int inimigoAparencia) {
+		this.inimigoAparencia = inimigoAparencia;
+	}
+
+	
+	
 }
