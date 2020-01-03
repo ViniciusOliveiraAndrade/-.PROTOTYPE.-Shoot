@@ -20,7 +20,7 @@ One of the players has to be the host of the match, and the other has to join th
 
 <center><img src="Figures/F2.png"></center>
 
-<center><img src="Figures/F3.png"></center>
+<center><img src="Figures/F4.png"></center>
 
 
 ## Join
@@ -31,7 +31,7 @@ One of the players has to be the host of the match, and the other has to join th
 
 * Fill up the port and the IP of the server.
 
-<center><img src="Figures/F4.png"></center>
+<center><img src="Figures/F3.png"></center>
 
 * Have fun!
 
